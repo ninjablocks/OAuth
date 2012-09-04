@@ -11,6 +11,7 @@ function AuthServer(clientService, tokenService, authorizationService, membershi
 	this.expiresIn = expiresIn || 3600;
 
  	this.isSupportedScope = function(scope) {
+ 		// Unfinished
 		if (!supportedScopes)
 			return true;
 
@@ -21,7 +22,7 @@ function AuthServer(clientService, tokenService, authorizationService, membershi
 	};
 	
 	this.getExpiresDate = function() {
-		return new Date(new Date().getTime() + expiresIn * 60000);
+		return new Date(new Date().getTime() + expiresIn * 1000);
 	};
 };
 
@@ -59,15 +60,15 @@ AuthServer.prototype.authorizeRequest = function(req, userId, callback) {
 		if (code)
 			self.authorizationService.saveAuthorizationCode({
 				code: code,
-				redirectUri: context.redirectUri,
 				clientId: client.id,
 				timestamp: new Date(),
-				userId: userId
+				userId: userId,
+				expiry: self.getExpiresDate()
 			}, finalResponse);
 		else if (token)
 			self.authorizationService.saveAccessToken({
 				access_token: token,
-				expires_in: this.getExpiresDate()
+				expiry: self.getExpiresDate()
 			}, finalResponse);
 	},
 	next = function(client) {
@@ -158,6 +159,7 @@ AuthServer.prototype.grantAccessToken = function(req, userId, callback) {
 
 		if (grantTypes.requiresClientSecret(context.grantType) && context.clientSecret !== client.secret)
 			return callback(errors.clientCredentialsInvalid(context.state));
+
 		return self.getTokenData(context, userId, function(tokenData) {
 			return tokenData.error ? callback(tokenData) : self.authorizationService.saveAccessToken(tokenData, function() {
 				delete tokenData.userId;
