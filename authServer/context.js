@@ -4,8 +4,12 @@ module.exports = function (req) {
 			return req.query[paramName];
 		else if (req.body && typeof req.body[paramName] !== 'undefined')
 			return req.body[paramName];
-		else
-			return null;
+		else {
+			var query = require('url').parse(req.url,true).query;
+			if (query && typeof query[paramName] !== 'undefined')
+				return query[paramName];
+			else return null;
+		}
 	};
 
 	function getAccessToken() {
