@@ -3,8 +3,6 @@ exports.isValidAuthorizationCode = function(context, authorizationService, callb
 		Validate the code is present, matches the stored one, and the clientId's match across requests
 	 */
 	authorizationService.getAuthorizationCode(context.code, function(authorizationCode) {
-		console.log('...')
-		console.log(authorizationCode)
 		return callback(authorizationCode 
 					&& (context.code === authorizationCode.code) 
 					&& !exports.isExpired(authorizationCode.expiry)
