@@ -6,7 +6,7 @@ exports.isValidAuthorizationCode = function(context, authorizationService, callb
 		return callback(authorizationCode 
 					&& (context.code === authorizationCode.code) 
 					&& !exports.isExpired(authorizationCode.expiry)
-					&& context.clientId === authorizationCode.clientId);
+					&& context.clientId == authorizationCode.clientId);
 	});
 };
 
