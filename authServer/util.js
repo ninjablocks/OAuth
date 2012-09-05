@@ -63,16 +63,10 @@ exports.buildAuthorizationUri = function(redirectUri, code, token, scope, state,
 	if (expiresIn)
 		query += '&expires_in=' + expiresIn;
 
-	if (scope) {
-		var scopeFormatted = '&scope=';
-		for(var i = 0, len = scope.length; i < len; i++) {
-			scopeFormatted += scope[i] + ',';
-		}
-
-		if (scopeFormatted[scopeFormatted.length] === ',')
-			scopeFormatted = scopeFormatted.slice(0, scopeFormatted.length - 1);
-		
-		query += scopeFormatted;
+	if (scope && scope instanceof Array) {
+		query += '&scope='+scope.join(',');
+	} else if (scope) {
+		query += '&scope='+scope;
 	}
 
 	if (state)
