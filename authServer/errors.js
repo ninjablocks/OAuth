@@ -81,3 +81,10 @@ exports.cannotRequestImplicitToken = function(state) {
 		state: state
 	};
 };
+
+exports.invalidClient = function(state) {
+	return {
+		error: 'The client credentials provided are invalid',
+		state: state
+	};
+};
