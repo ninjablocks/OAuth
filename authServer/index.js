@@ -192,7 +192,7 @@ AuthServer.prototype.validateAccessToken = function(req, callback) {
 			response = {
 				isValid: true,
 				userId:tokenData.userId,
-				clientId:tokenData.userId
+				clientId:tokenData.clientId
 			};
 			
 		return callback(response);
