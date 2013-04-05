@@ -68,8 +68,8 @@ describe('context', function() {
 		expect(context(completeRequest).redirectUri).to.equal('http://someredirect.com');
 	});
 
-	it ('has the correct access token with a complete request', function() {
-		expect(context(completeRequest).accessToken).to.equal('myaccesstoken');
+	it.only ('has the correct access token with a complete request', function() {
+		expect(context(completeRequest).access_token).to.equal('myaccesstoken');
 	});
 	
 	it ('has the correct username with a complete request', function() {
