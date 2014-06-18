@@ -68,6 +68,9 @@ AuthServer.prototype.authorizeRequest = function(req, userId, callback) {
 		else if (token)
 			self.authorizationService.saveAccessToken({
 				access_token: token,
+				clientId: client.id,
+				timestamp: new Date(),
+				userId: userId,
 				expiry: self.getExpiresDate()
 			}, finalResponse);
 	},
